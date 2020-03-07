@@ -8,7 +8,8 @@ import {
     FETCH_PIX_SUCCESS,
     CREATE_PIC_FAILURE,
     GET_PICTURE_SUCCESS,
-    SELECT_PICTURE
+    SELECT_PICTURE,
+    UNSELECT_PICTURE
 } from "./actionTypes";
 import {push} from "connected-react-router";
 import {NotificationManager} from "react-notifications";
@@ -55,7 +56,6 @@ export const loginUser = userData => {
 };
 
 export const logoutUser = () => {
-    const event = new CloseEvent('CLOSED');
     return (dispatch, getState) => {
         const token = getState().users.user.token;
         const headers = {Token: token};
@@ -149,10 +149,15 @@ export const deletePicture = id => {
         return axios.delete('/pictures?id=' + id, config).then(
             response => {
                 dispatch(fetchPicturesSuccess(response.data));
+                dispatch(push("/"));
             });
     };
 };
 
 export const selectPicture = image => {
     return {type: SELECT_PICTURE, image};
+};
+
+export const closePopUp = () => {
+    return {type: UNSELECT_PICTURE};
 };

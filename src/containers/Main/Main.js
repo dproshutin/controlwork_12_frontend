@@ -1,15 +1,28 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {fetchPictures} from "../../store/actions";
+import {closePopUp, fetchPictures} from "../../store/actions";
 import Picture from "../../components/Picture/Picture";
-import {Row} from "reactstrap";
+import {Button, Modal, ModalBody, ModalFooter, Row} from "reactstrap";
+import config from "../../config";
 
 class Main extends Component {
+    state = {
+        modal: false,
+        fade: false
+    };
+
+    toggle = () => {
+        this.setState({
+            modal: !this.state.modal
+        });
+    };
+
     componentDidMount() {
         const query = new URLSearchParams(this.props.location.search);
         const user = query.get('user');
         this.props.onFetchPictures(user);
     }
+
     componentDidUpdate(prevProps, prevState) {
         if (prevState === null) {
             if (prevProps.location.search !== this.props.location.search) {
@@ -28,6 +41,11 @@ class Main extends Component {
     }
 
     render() {
+        let str = config.apiURL + "/uploads/" + this.props.selectedPicture;
+        let stylesImg = {
+            width: '100%',
+            height: 'auto'
+        };
         return (
             <>
                 <Row>
@@ -49,11 +67,33 @@ class Main extends Component {
                                     createdBy={picture.createdBy.displayName}
                                     creatorId={picture.createdBy._id}
                                     ifTheSameUser={picture.createdBy._id === userId}
+                                    click={this.toggle}
                                 />
                             );
                         })
                     }
                 </Row>
+                <div>
+                    <Button color="danger" onClick={this.toggle}>Launch</Button>
+                    <Modal
+                        isOpen={this.state.modal}
+                        size="lg"
+                        fade={this.state.fade}
+                        toggle={this.toggle}
+                        onClosed={this.props.deselectPicture}
+                    >
+                        <ModalBody>
+                            <img
+                                style={stylesImg}
+                                src={str}
+                                alt=""
+                            />
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button onClick={this.toggle}>Close</Button>
+                        </ModalFooter>
+                    </Modal>
+                </div>
             </>
         );
     }
@@ -62,13 +102,15 @@ class Main extends Component {
 const mapStateToProps = state => {
     return {
         pictures: state.pictures.pictures,
+        selectedPicture: state.pictures.selectedPicture,
         user: state.users.user
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchPictures: (query) => dispatch(fetchPictures(query))
+        onFetchPictures: (query) => dispatch(fetchPictures(query)),
+        deselectPicture: () => dispatch(closePopUp())
     }
 };
 

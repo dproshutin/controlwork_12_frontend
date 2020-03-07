@@ -4,9 +4,7 @@ import {
     Container,
     Nav,
     Navbar,
-    NavbarBrand,
-    NavItem,
-    NavLink
+    NavbarBrand
 } from "reactstrap";
 import AnonymousMenu from "./Menus/AnonymousMenu";
 import UserMenu from "./Menus/UserMenu";

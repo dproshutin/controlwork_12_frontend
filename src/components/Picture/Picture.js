@@ -3,14 +3,14 @@ import {Button, Card, CardBody, CardText, CardTitle, Col, FormGroup} from "react
 import {Link} from "react-router-dom";
 import PictureThumbnail from "../PictureThumbnail/PictureThumbnail";
 import {connect} from "react-redux";
-import {deletePicture, selectPicture} from "../../store/actions";
+import {deletePicture} from "../../store/actions";
 
 const Picture = props => {
     return (
         <Col md={4}>
             <Card>
                 <CardBody>
-                    <PictureThumbnail image={props.image} onClick={() => this.props.selectPicture()}/>
+                    <PictureThumbnail image={props.image} click={props.click}/>
                     <CardTitle>{props.title}</CardTitle>
                     <CardText>
                         posted by
@@ -34,14 +34,12 @@ const Picture = props => {
 
 const mapStateToProps = state => {
     return {
-        selectedPicture: state.pictures.selectedPicture,
         user: state.users.user
     }
 };
 
-const mapDispatchToProps = (dispatch, otherProps) => {
+const mapDispatchToProps = dispatch => {
     return {
-        selectPicture: () => dispatch(selectPicture(otherProps.image)),
         deletePicture: (id) => dispatch(deletePicture(id))
     }
 };
