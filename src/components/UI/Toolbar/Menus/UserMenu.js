@@ -1,6 +1,7 @@
 import React from 'react';
 import {DropdownItem, DropdownMenu, DropdownToggle, NavItem, NavLink, UncontrolledDropdown} from "reactstrap";
 import {NavLink as RouterNavLink} from "react-router-dom";
+import UserThumbnail from "../../../UserThumbnail/UserThumbnail";
 
 const UserMenu = ({user, logout}) => {
     return (
