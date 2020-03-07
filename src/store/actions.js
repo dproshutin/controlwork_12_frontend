@@ -7,7 +7,8 @@ import {
     LOGOUT_USER,
     FETCH_PIX_SUCCESS,
     CREATE_PIC_FAILURE,
-    GET_PICTURE_SUCCESS
+    GET_PICTURE_SUCCESS,
+    SELECT_PICTURE
 } from "./actionTypes";
 import {push} from "connected-react-router";
 import {NotificationManager} from "react-notifications";
@@ -126,6 +127,11 @@ export const createPicture = (pictureData) => {
     }
 };
 
+export const getPictureSuccess = picture => {
+    return {type: GET_PICTURE_SUCCESS, picture};
+};
+
+
 export const getPicture = id => {
     return dispatch => {
         return axios.get('/pictures/' + id).then(
@@ -147,6 +153,6 @@ export const deletePicture = id => {
     };
 };
 
-export const getPictureSuccess = picture => {
-    return {type: GET_PICTURE_SUCCESS, picture};
+export const selectPicture = image => {
+    return {type: SELECT_PICTURE, image};
 };
