@@ -38,7 +38,6 @@ class Register extends Component {
     };
 
     render() {
-        console.log([this.props.registerError]);
         return (
             <>
                 <h2>Register new user</h2>

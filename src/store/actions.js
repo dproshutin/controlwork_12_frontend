@@ -19,6 +19,12 @@ const registerUserSuccess = () => {
 };
 
 const registerUserFailure = (error) => {
+    const errorStr = "User validation failed: username: Validator failed for path `username` with value ";
+    const position = errorStr.length;
+    if (error.message.includes(errorStr)) {
+        const login = error.message.substr(position);
+        NotificationManager.error("Пользователь с таким логином " + login + " уже существует." );
+    }
     return {type: REGISTER_USER_FAILURE, error};
 };
 
