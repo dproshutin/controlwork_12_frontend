@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {NotificationContainer} from "react-notifications";
 import Routes from "./Routes";
 import './App.css';
+import {logoutUser} from "./store/actions";
 
 class App extends Component {
   render() {
@@ -28,4 +29,16 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    user: state.users.user
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    logoutUser: () => dispatch(logoutUser())
+  }
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

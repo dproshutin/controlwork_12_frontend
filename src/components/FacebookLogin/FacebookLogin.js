@@ -3,6 +3,7 @@ import FacebookLoginButton from "react-facebook-login/dist/facebook-login-render
 import config from "../../config";
 import {Button} from "reactstrap";
 import {connect} from "react-redux";
+import {facebookLogin} from "../../store/actions";
 
 class FacebookLogin extends Component {
     render() {
@@ -27,4 +28,10 @@ class FacebookLogin extends Component {
     }
 }
 
-export default FacebookLogin;
+const mapDispatchToProps = dispatch => {
+    return {
+        facebookLogin: data => dispatch(facebookLogin(data))
+    };
+};
+
+export default connect(null, mapDispatchToProps) (FacebookLogin);
