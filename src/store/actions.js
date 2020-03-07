@@ -5,7 +5,8 @@ import {
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAILURE,
     LOGOUT_USER,
-    FETCH_PIX_SUCCESS
+    FETCH_PIX_SUCCESS,
+    CREATE_PIC_FAILURE
 } from "./actionTypes";
 import {push} from "connected-react-router";
 import {NotificationManager} from "react-notifications";
@@ -97,5 +98,29 @@ export const fetchPictures = (query) => {
         axios.get("/pictures", config).then(response => {
             dispatch(fetchPicturesSuccess(response.data));
         });
+    }
+};
+
+const createPictureFailure = error => {
+    return {type: CREATE_PIC_FAILURE, error};
+};
+
+export const createPicture = (pictureData) => {
+    return (dispatch, getState) => {
+        const token = getState().users.user.token;
+
+        const config = {headers: {'Token': token}};
+        return axios.post('/pictures/', pictureData, config).then(
+            response => {
+                NotificationManager.success("The picture has added!");
+                dispatch(push('/'));
+            },
+            error => {
+                if (error.response) {
+                    dispatch(createPictureFailure(error.response.data));
+                } else {
+                    dispatch(createPictureFailure({global: "No network connection"}))
+                }
+            });
     }
 };
