@@ -12,13 +12,13 @@ class Main extends Component {
         this.props.onFetchPictures(user);
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.location.search !== this.props.location.search || prevState.pictures !== this.props.pictures) {
-            const query = new URLSearchParams(this.props.location.search);
-            const user = query.get('user');
-            this.props.onFetchPictures(user);
-        }
-    }
+    // componentDidUpdate(prevProps, prevState) {
+    //     if (prevProps.location.search !== this.props.location.search || prevState.pictures !== this.props.pictures) {
+    //         const query = new URLSearchParams(this.props.location.search);
+    //         const user = query.get('user');
+    //         this.props.onFetchPictures(user);
+    //     }
+    // }
 
     render() {
 
