@@ -6,7 +6,8 @@ import {
     LOGIN_USER_FAILURE,
     LOGOUT_USER,
     FETCH_PIX_SUCCESS,
-    CREATE_PIC_FAILURE
+    CREATE_PIC_FAILURE,
+    GET_PICTURE_SUCCESS
 } from "./actionTypes";
 import {push} from "connected-react-router";
 import {NotificationManager} from "react-notifications";
@@ -123,4 +124,29 @@ export const createPicture = (pictureData) => {
                 }
             });
     }
+};
+
+export const getPicture = id => {
+    return dispatch => {
+        return axios.get('/pictures/' + id).then(
+            response => {
+                dispatch(getPictureSuccess(response.data));
+                console.log(response.data);
+            });
+    };
+};
+
+export const deletePicture = id => {
+    return (dispatch, getState) => {
+        const token = getState().users.user.token;
+        const config = {headers: {'Token': token}};
+        return axios.delete('/pictures?id=' + id, config).then(
+            response => {
+                dispatch(fetchPicturesSuccess(response.data));
+            });
+    };
+};
+
+export const getPictureSuccess = picture => {
+    return {type: GET_PICTURE_SUCCESS, picture};
 };

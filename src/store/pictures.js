@@ -1,6 +1,7 @@
 import {
     FETCH_PIX_SUCCESS,
-    CREATE_PIC_FAILURE
+    CREATE_PIC_FAILURE,
+    GET_PICTURE_SUCCESS
 } from "./actionTypes";
 
 const initialState = {
@@ -15,6 +16,8 @@ const picturesReducer = function (state = initialState, action) {
             return {...state, pictures: action.pictures};
         case CREATE_PIC_FAILURE:
             return {...state, error: action.error};
+        case GET_PICTURE_SUCCESS:
+            return {...state, selectedPicture: action.picture};
         default:
             return state;
     }
