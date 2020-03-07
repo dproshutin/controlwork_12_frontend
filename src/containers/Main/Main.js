@@ -74,7 +74,6 @@ class Main extends Component {
                     }
                 </Row>
                 <div>
-                    <Button color="danger" onClick={this.toggle}>Launch</Button>
                     <Modal
                         isOpen={this.state.modal}
                         size="lg"
