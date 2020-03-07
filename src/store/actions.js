@@ -4,7 +4,8 @@ import {
     REGISTER_USER_FAILURE,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAILURE,
-    LOGOUT_USER
+    LOGOUT_USER,
+    FETCH_PIX_SUCCESS
 } from "./actionTypes";
 import {push} from "connected-react-router";
 import {NotificationManager} from "react-notifications";
@@ -74,5 +75,27 @@ export const facebookLogin = data => {
             }, error => {
                 dispatch(loginUserFailure(error.response.data));
             });
+    }
+};
+
+const fetchPicturesSuccess = (pictures) => {
+    return {type: FETCH_PIX_SUCCESS, pictures};
+};
+
+export const fetchPictures = (query) => {
+    return (dispatch, getState) => {
+        let token;
+        if (!!getState().users.user) {
+            token = getState().users.user.token;
+        }
+        let config = {
+            headers: {'Token': token},
+            params: {
+                user: query
+            },
+        };
+        axios.get("/pictures", config).then(response => {
+            dispatch(fetchPicturesSuccess(response.data));
+        });
     }
 };
